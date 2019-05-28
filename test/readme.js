@@ -134,5 +134,13 @@ describe('readme', function () {
             assert.deepEqual(filtered_list.map((o) => o.id).sort(), [1, 2, 6]);
         });
 
+        it('all the non fruit and veg', function () {
+            let compiler      = new jsofi.compiler();
+            let filter_fun    = compiler.filter_fun('not extra.fruit & not extra.veg');
+            let filtered_list = object_list.filter(filter_fun);
+
+            assert.deepEqual(filtered_list.map((o) => o.id).sort(), [4, 5]);
+        });
+
     });
 });

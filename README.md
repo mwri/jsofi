@@ -94,6 +94,7 @@ Supported operators are as follows
 | ~=       | Regex match           |
 | &        | Logical AND           |
 | &#124;   | Logical OR            |
+| not      | Logical NOT           |
 
 Also a period may be used to access sub object data (e.g. `extra.veg`
 in the example data above) and parentheses can be used to vary the
@@ -311,6 +312,7 @@ The following are example queries:
 | All fruit                 | extra.fruit                                     |
 | All vegetables            | extra.veg                                       |
 | Fruit and veg with an "e" | (extra.veg | extra.fruit) & food ~= /e/         |
+| All the non fruit and veg | not extra.fruit & not extra.veg                 |
 
 ## Build
 

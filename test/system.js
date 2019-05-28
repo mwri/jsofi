@@ -117,6 +117,11 @@ let simple_test_specs = [
         'descr': 'sub property equality match', 'expr': 'complex.a == 4',
         'result': calc_eq((o) => o.complex.a, 4),
     },
+
+    {
+        'descr': 'not', 'expr': 'not (os ~= /^l/)',
+        'result': calc_eq((o) => /^l/.exec(o.os) && true || false, false),
+    },
 ];
 
 let fun_test_specs = [
