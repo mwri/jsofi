@@ -11,7 +11,7 @@ let object_list = [
     {'id': 3, 'food': 'bananna', 'rating': 3, 'cols': ['green', 'yellow', 'black'], 'extra': {'fruit': true, 'veg': false} },
     {'id': 4, 'food': 'rice',    'rating': 3, 'cols': ['white', 'brown'],           'extra': {'fruit': false, 'veg': false}},
     {'id': 5, 'food': 'egg',     'rating': 8, 'cols': ['white', 'brown', 'beige'],  'extra': {'fruit': false, 'veg': false}},
-    {'id': 5, 'food': 'tomatoe', 'rating': 5, 'cols': ['red', 'yellow', 'green'],   'extra': {'fruit': false, 'veg': true} },
+    {'id': 6, 'food': 'tomatoe', 'rating': 5, 'cols': ['red', 'yellow', 'green'],   'extra': {'fruit': false, 'veg': true} },
 ];
 
 let object_list2 = [
@@ -99,5 +99,40 @@ describe('readme', function () {
         let js_source = parser.render(renderer);
 
         assert.equal(typeof js_source, 'string');
+    });
+
+    describe('example queries', function () {
+        it('IDs 1 and 4', function () {
+            let compiler      = new jsofi.compiler();
+            let filter_fun    = compiler.filter_fun('(id == 1) | (id == 4)');
+            let filtered_list = object_list.filter(filter_fun);
+
+            assert.deepEqual(filtered_list.map((o) => o.id).sort(), [1, 4]);
+        });
+
+        it('all fruit', function () {
+            let compiler      = new jsofi.compiler();
+            let filter_fun    = compiler.filter_fun('extra.fruit');
+            let filtered_list = object_list.filter(filter_fun);
+
+            assert.deepEqual(filtered_list.map((o) => o.id).sort(), [1, 3]);
+        });
+
+        it('all veg', function () {
+            let compiler      = new jsofi.compiler();
+            let filter_fun    = compiler.filter_fun('extra.veg');
+            let filtered_list = object_list.filter(filter_fun);
+
+            assert.deepEqual(filtered_list.map((o) => o.id).sort(), [2, 6]);
+        });
+
+        it('fruit and veg with an "e"', function () {
+            let compiler      = new jsofi.compiler();
+            let filter_fun    = compiler.filter_fun('(extra.veg | extra.fruit) & food ~= /e/');
+            let filtered_list = object_list.filter(filter_fun);
+
+            assert.deepEqual(filtered_list.map((o) => o.id).sort(), [1, 2, 6]);
+        });
+
     });
 });

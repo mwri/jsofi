@@ -40,7 +40,7 @@ let object_list = [
     {'id': 3, 'food': 'bananna', 'rating': 3, 'cols': ['green', 'yellow', 'black'], 'extra': {'fruit': true, 'veg': false} },
     {'id': 4, 'food': 'rice',    'rating': 3, 'cols': ['white', 'brown'],           'extra': {'fruit': false, 'veg': false}},
     {'id': 5, 'food': 'egg',     'rating': 8, 'cols': ['white', 'brown', 'beige'],  'extra': {'fruit': false, 'veg': false}},
-    {'id': 5, 'food': 'tomatoe', 'rating': 5, 'cols': ['red', 'yellow', 'green'],   'extra': {'fruit': false, 'veg': true} },
+    {'id': 6, 'food': 'tomatoe', 'rating': 5, 'cols': ['red', 'yellow', 'green'],   'extra': {'fruit': false, 'veg': true} },
 ];
 ```
 
@@ -93,7 +93,7 @@ Supported operators are as follows
 | >=       | Greater than or equal |
 | ~=       | Regex match           |
 | &        | Logical AND           |
-| |        | Logical OR            |
+| &#124;   | Logical OR            |
 
 Also a period may be used to access sub object data (e.g. `extra.veg`
 in the example data above) and parentheses can be used to vary the
@@ -290,10 +290,27 @@ usable, is probably all you have to do.
 
 ## Example expressions
 
-Working from the quick start example data again, the following are
-example queries:
+Working from the quick start example data again:
 
+```javascript
+let object_list = [
+    {'id': 1, 'food': 'apple',   'rating': 7, 'cols': ['green', 'red'],             'extra': {'fruit': true, 'veg': false} },
+    {'id': 2, 'food': 'pepper',  'rating': 5, 'cols': ['green', 'yellow', 'red'],   'extra': {'fruit': false, 'veg': true} },
+    {'id': 3, 'food': 'bananna', 'rating': 3, 'cols': ['green', 'yellow', 'black'], 'extra': {'fruit': true, 'veg': false} },
+    {'id': 4, 'food': 'rice',    'rating': 3, 'cols': ['white', 'brown'],           'extra': {'fruit': false, 'veg': false}},
+    {'id': 5, 'food': 'egg',     'rating': 8, 'cols': ['white', 'brown', 'beige'],  'extra': {'fruit': false, 'veg': false}},
+    {'id': 6, 'food': 'tomatoe', 'rating': 5, 'cols': ['red', 'yellow', 'green'],   'extra': {'fruit': false, 'veg': true} },
+];
+```
 
+The following are example queries:
+
+| Description               | Query                                           |
+|---------------------------|-------------------------------------------------|
+| IDs 1 and 4               | (id == 1) | (id == 4)                           |
+| All fruit                 | extra.fruit                                     |
+| All vegetables            | extra.veg                                       |
+| Fruit and veg with an "e" | (extra.veg | extra.fruit) & food ~= /e/         |
 
 ## Build
 
