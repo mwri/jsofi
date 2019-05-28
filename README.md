@@ -93,7 +93,9 @@ Supported operators are as follows
 | >=       | Greater than or equal |
 | ~=       | Regex match           |
 | &        | Logical AND           |
+| and      | Logical AND           |
 | &#124;   | Logical OR            |
+| or       | Logical OR            |
 | not      | Logical NOT           |
 
 Also a period may be used to access sub object data (e.g. `extra.veg`
