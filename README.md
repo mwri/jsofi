@@ -310,10 +310,10 @@ The following are example queries:
 
 | Description               | Query                                           |
 |---------------------------|-------------------------------------------------|
-| IDs 1 and 4               | (id == 1) | (id == 4)                           |
+| IDs 1 and 4               | (id == 1) &#124; (id == 4)                      |
 | All fruit                 | extra.fruit                                     |
 | All vegetables            | extra.veg                                       |
-| Fruit and veg with an "e" | (extra.veg | extra.fruit) & food ~= /e/         |
+| Fruit and veg with an "e" | (extra.veg &#124; extra.fruit) & food ~= /e/    |
 | All the non fruit and veg | not extra.fruit & not extra.veg                 |
 
 ## Build
