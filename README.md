@@ -234,6 +234,15 @@ let renderer = new filter_fun_renderer({
 });
 ```
 
+The function returned, source or not, will be anonymous. To give it
+a name use the `fun_name` option, like this:
+
+```javascript
+let renderer = new filter_fun_renderer({
+    'fun_name': 'my_filter',
+});
+```
+
 Note that any built in functions used will have their source included
 but custom functions will not as their correct rendering cannot be
 guaranteed.

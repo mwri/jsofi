@@ -1,8 +1,9 @@
 let assert = require('assert');
 
-const jsofi               = require('./../lib/index.js');
-const filter_fun_renderer = require("./../lib/filter-fun-renderer.js");
-const expr_renderer       = require("./../lib/expr-renderer.js");
+const jsofi                    = require('./../lib/index.js');
+const filter_fun_renderer      = require("./../lib/filter-fun-renderer.js");
+const couchdb_map_fun_renderer = require("./../lib/couchdb-map-fun-renderer.js");
+const expr_renderer            = require("./../lib/expr-renderer.js");
 
 
 let debug = false;
@@ -243,6 +244,45 @@ describe('filter_fun(source) renderer (disabled for coverage)', function () {
                         let filter     = new Function('subject', `return (${filter_src})(subject);`);
 
                         assert_filter_result(filter, test_spec.result);
+                    });
+                }
+            });
+        }
+    });
+});
+
+
+describe('couchdb_map_fun renderer', function () {
+    beforeEach(async function () {
+        this._compiler = new jsofi.compiler();
+        this._renderer = new couchdb_map_fun_renderer.renderer();
+    });
+
+    describe('renders', function () {
+        for (test_spec_name in test_specs) {
+            describe(test_spec_name+' cases', function () {
+                for (let test_spec of test_specs[test_spec_name]) {
+                    it(test_spec.descr, function () {
+                        let parser  = this._compiler.parser(test_spec.expr);
+                        let fun_src = parser.render(this._renderer);
+
+                        assert(typeof fun_src, 'string');
+                    });
+                }
+            });
+        }
+    });
+
+    describe('compiles', function () {
+        for (test_spec_name in test_specs) {
+            describe(test_spec_name+' cases', function () {
+                for (let test_spec of test_specs[test_spec_name]) {
+                    it(test_spec.descr, function () {
+                        let parser  = this._compiler.parser(test_spec.expr);
+                        let fun_src = parser.render(this._renderer);
+
+                        let fun = new Function('doc', `return (${fun_src})(doc);`);
+                        assert(typeof fun, 'function');
                     });
                 }
             });
