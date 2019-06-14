@@ -60,11 +60,9 @@ rendered in another language or for a slightly different environment for
 example. To do this a slightly longer form of the above code is adopted:
 
 ```javascript
-let filter_fun_renderer = require('./../lib/filter-fun-renderer.js').renderer;
-
 let compiler      = new jsofi.compiler();
 let parser        = compiler.parser('rating >= 5');
-let filter_fun    = parser.render(new filter_fun_renderer());
+let filter_fun    = parser.render(new jsofi.renderer.filter_fun());
 let filtered_list = object_list.filter(filter_fun);
 ```
 
