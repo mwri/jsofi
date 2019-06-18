@@ -24,6 +24,7 @@ and more.
       1. [filter-fun-renderer](#filter-fun-renderer).
       2. [raw-renderer](#raw-renderer).
       3. [expr-renderer](#expr-renderer).
+      4. [couchdb-map-fun-renderer](#couchdb-map-fun-renderer).
    2. [Custom renderers](#custom-renderers).
 6. [Example expressions](#example-expressions).
 7. [Build](#build).
@@ -264,6 +265,31 @@ purposes.
 Rerenders the original expression, though parentheses may vary from
 the original. This is useful to get a canonical version of the
 expression.
+
+#### couchdb-map-fun-renderer
+
+[CouchDB](http://couchdb.apache.org/) has materialised views filtered
+by Javascript functions operating on the data. Such functions are given
+to CouchDB in source form and this renderer renders such source.
+
+This means an expression can be invoked efficiently at run time, though
+the provision of more and more views will require more disk and memory
+utilisation and degrade write speeds.
+
+One option `emit_src` is supported to dictate what is emitted. The default
+is `emit(doc._id, doc);`, and this source is inserted into the map function
+to be run when the expression evaluates `true` for the data given.
+
+```javascript
+let compiler    = new jsofi.compiler();
+let parser      = compiler.parser('rating >= 5');
+
+let renderer = new jsofi.renderer.couchdb_map_fun({
+    'emit_src': 'emit(doc._id, doc);',
+});
+
+let map_fun_src = parser.render(new jsofi.renderer.couchdb_map_fun());
+```
 
 ### custom-renderers
 
