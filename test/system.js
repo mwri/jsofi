@@ -131,6 +131,10 @@ let fun_test_specs = [
         'result': calc_eq((o) => o.named.filter((o) => o.name == "one").length > 0, true),
     },
     {
+        'descr': 'any()', 'expr': 'any(named, name ~= /o/)',
+        'result': calc_eq((o) => o.named.filter((o) => /o/.exec(o.name)).length > 0, true),
+    },
+    {
         'descr': 'length()', 'expr': 'length(named) > 2',
         'result': calc_gt((o) => o.named.length, 2),
     },
