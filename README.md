@@ -400,3 +400,6 @@ specify the addresses or the services, and usernames and passwords.
 | JSOFI_TEST_MONGODB_HOST     | Address of the CouchDB server (e.g. "localhost:27017") |
 | JSOFI_TEST_MONGODB_USER     | User to use authenticating to the MongoDB server       |
 | JSOFI_TEST_MONGODB_PASSWORD | Password to use authenticating to the MongoDB server   |
+
+The Travis CI build employs docker containers to provide CouchDB and MongoDB
+services, setting up the environment variables appropriately.
