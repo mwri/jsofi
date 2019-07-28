@@ -5,20 +5,20 @@ dist: bionic
 services:
   - docker
 before_install:
-  - export JSOFI_TEST_COUCHDB_USER="jsofi-tests"
-  - export JSOFI_TEST_COUCHDB_PASSWORD="jsofi-tests"
-  - docker pull couchdb
-  - docker run --rm -d --name jsofi-tests-couchdb -e COUCHDB_USER="${JSOFI_TEST_COUCHDB_USER}" -e COUCHDB_PASSWORD="${JSOFI_TEST_COUCHDB_PASSWORD}" couchdb
-  - export JSOFI_TEST_COUCHDB_HOST="$(docker inspect jsofi-tests-couchdb | jq -Sr '.[0].NetworkSettings.IPAddress'):5984"
-  - curl -u $JSOFI_TEST_COUCHDB_USER:$JSOFI_TEST_COUCHDB_PASSWORD http://172.17.0.3:5984/_users -H 'Content-Type: application/json' -X PUT
-  - curl -u $JSOFI_TEST_COUCHDB_USER:$JSOFI_TEST_COUCHDB_PASSWORD http://172.17.0.3:5984/_replicator -H 'Content-Type: application/json' -X PUT
-  - export JSOFI_TEST_MONGODB_USER="jsofi-tests"
-  - export JSOFI_TEST_MONGODB_PASSWORD="jsofi-tests"
-  - docker pull mongo
-  - docker run --rm -d --name jsofi-tests-mongodb -e MONGO_INITDB_ROOT_USERNAME="${JSOFI_TEST_MONGODB_USER}" -e MONGO_INITDB_ROOT_PASSWORD="${JSOFI_TEST_MONGODB_PASSWORD}" mongo
-  - export JSOFI_TEST_MONGODB_HOST="$(docker inspect jsofi-tests-mongodb | jq -Sr '.[0].NetworkSettings.IPAddress'):27017"
+  - 'export JSOFI_TEST_COUCHDB_USER="jsofi-tests"'
+  - 'export JSOFI_TEST_COUCHDB_PASSWORD="jsofi-tests"'
+  - 'docker pull couchdb'
+  - 'docker run --rm -d --name jsofi-tests-couchdb -e COUCHDB_USER="${JSOFI_TEST_COUCHDB_USER}" -e COUCHDB_PASSWORD="${JSOFI_TEST_COUCHDB_PASSWORD}" couchdb'
+  - 'export JSOFI_TEST_COUCHDB_HOST="$(docker inspect jsofi-tests-couchdb | jq -Sr ".[0].NetworkSettings.IPAddress"):5984"'
+  - 'curl -u $JSOFI_TEST_COUCHDB_USER:$JSOFI_TEST_COUCHDB_PASSWORD http://172.17.0.3:5984/_users -H "Content-Type: application/json" -X PUT'
+  - 'curl -u $JSOFI_TEST_COUCHDB_USER:$JSOFI_TEST_COUCHDB_PASSWORD http://172.17.0.3:5984/_replicator -H "Content-Type: application/json" -X PUT'
+  - 'export JSOFI_TEST_MONGODB_USER="jsofi-tests"'
+  - 'export JSOFI_TEST_MONGODB_PASSWORD="jsofi-tests"'
+  - 'docker pull mongo'
+  - 'docker run --rm -d --name jsofi-tests-mongodb -e MONGO_INITDB_ROOT_USERNAME="${JSOFI_TEST_MONGODB_USER}" -e MONGO_INITDB_ROOT_PASSWORD="${JSOFI_TEST_MONGODB_PASSWORD}" mongo'
+  - 'export JSOFI_TEST_MONGODB_HOST="$(docker inspect jsofi-tests-mongodb | jq -Sr ".[0].NetworkSettings.IPAddress"):27017"'
 script:
-  - npm run coverage
-  - npm run test
+  - 'npm run coverage'
+  - 'npm run test'
 after_success:
-  - ./node_modules/.bin/coveralls < coverage/lcov.info
+  - './node_modules/.bin/coveralls < coverage/lcov.info'
