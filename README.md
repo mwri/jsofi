@@ -25,6 +25,7 @@ and more.
       2. [raw-renderer](#raw-renderer).
       3. [expr-renderer](#expr-renderer).
       4. [couchdb-map-fun-renderer](#couchdb-map-fun-renderer).
+      5. [mongodb-query-renderer](#mongodb-query-renderer).
    2. [Custom renderers](#custom-renderers).
 6. [Example expressions](#example-expressions).
 7. [Build](#build).
@@ -268,7 +269,8 @@ expression.
 
 #### couchdb-map-fun-renderer
 
-[CouchDB](http://couchdb.apache.org/) has materialised views filtered
+[CouchDB](http://couchdb.apache.org/) has materialised views (actually
+more like query caches which are brought up to date when used) filtered
 by Javascript functions operating on the data. Such functions are given
 to CouchDB in source form and this renderer renders such source.
 
@@ -289,6 +291,38 @@ let renderer = new jsofi.renderer.couchdb_map_fun({
 });
 
 let map_fun_src = parser.render(new jsofi.renderer.couchdb_map_fun());
+```
+
+#### mongodb-query-renderer
+
+MongoDB does not have materialised views, so the benefit profile
+vs CouchDB or CouchBASE is quite different. The option of having
+MongoDB do the heavy lifting rather than pulling a large data set
+to your nodejs app and filtering it there may still be highly
+beneficial though, even if an index is not leveraged.
+
+Note that support for MongoDB is incomplete, MongoDB's `$not`
+operator and the functions are difficult to support.
+
+```javascript
+let compiler    = new jsofi.compiler();
+let parser      = compiler.parser('rating >= 5');
+
+let renderer = new jsofi.renderer.mongodb_query();
+
+let query = parser.render(new jsofi.renderer.couchdb_map_fun());
+console.log("QUERY", query);
+
+const mongodb = require('mongodb');
+mongodb.MongoClient.connect(
+    mongodb_host,
+    (err, client) => {
+        let collection = this._db.collection('my_collection');
+        collection.find(query).toArray(function(err, docs) {
+            console.log("RESULT", docs);
+        });
+    }
+);
 ```
 
 ### custom-renderers
@@ -353,3 +387,16 @@ The following are example queries:
 
 run `npm install` to install the dependencies, `npm run test` (or
 `npm run coverage`) to run the test suite.
+
+CouchDB and MongoDB integration tests will be skipped by default.
+If you want to run these you must set environment variables to
+specify the addresses or the services, and usernames and passwords.
+
+| Environment variable        | Description                                            |
+|-----------------------------|--------------------------------------------------------|
+| JSOFI_TEST_COUCHDB_HOST     | Address of the CouchDB server (e.g. "localhost:5984")  |
+| JSOFI_TEST_COUCHDB_USER     | User to use authenticating to the CouchDB server       |
+| JSOFI_TEST_COUCHDB_PASSWORD | Password to use authenticating to the CouchDB server   |
+| JSOFI_TEST_MONGODB_HOST     | Address of the CouchDB server (e.g. "localhost:27017") |
+| JSOFI_TEST_MONGODB_USER     | User to use authenticating to the MongoDB server       |
+| JSOFI_TEST_MONGODB_PASSWORD | Password to use authenticating to the MongoDB server   |
