@@ -41,6 +41,7 @@
     "load-grunt-tasks": "^5.0.0",
     "mocha": "^6.1.4",
     "mongodb": "^3.3.0-beta2",
+    "nano": "^8.1.0",
     "nyc": "^14.1.1",
     "saslprep": "^1.0.3"
   },
