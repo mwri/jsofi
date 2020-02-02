@@ -103,6 +103,10 @@ let simple_test_specs = [
         'descr': 'regex match', 'expr': 'os ~= /^l/',
         'result': calc_eq((o) => /^l/.exec(o.os) && true || false, true),
     },
+    {
+        'descr': 'regex match', 'expr': 'os =~ /^l/',
+        'result': calc_eq((o) => /^l/.exec(o.os) && true || false, true),
+    },
 
     {
         'descr': 'sub property equality match', 'expr': 'complex.a == 4',
