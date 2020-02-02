@@ -1,7 +1,7 @@
 {
   "name": "jsofi",
   "description": "JSOn FIlter query compiler",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "author": {
     "name": "Michael Wright",
     "email": "mjw@methodanalysis.com"
