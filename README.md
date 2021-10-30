@@ -1,4 +1,4 @@
-# jsofi [![Build Status](https://travis-ci.org/mwri/jsofi.svg?branch=master)](https://travis-ci.org/mwri/jsofi) [![Coverage Status](https://coveralls.io/repos/github/mwri/jsofi/badge.svg?branch=master)](https://coveralls.io/github/mwri/jsofi?branch=master)
+# jsofi [![Build Status](https://app.travis-ci.com/mwri/jsofi.svg?branch=master)](https://app.travis-ci.com/github/mwri/jsofi) [![Coverage Status](https://coveralls.io/repos/github/mwri/jsofi/badge.svg?branch=master)](https://coveralls.io/github/mwri/jsofi?branch=master)
 
 JSOFI (JSON Filter) compiles boolean logic expressions into functions which may
 be applied to lists of objects for filtering.
