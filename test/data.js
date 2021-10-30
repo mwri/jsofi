@@ -163,6 +163,22 @@ let join_test_specs = [
         'descr': 'or operator (conjoined)', 'expr': 'os == "linux" | mem == 4096 | cores == 4',
         'result': calc_or(calc_or(calc_eq((o) => o.os, 'linux'), calc_eq((o) => o.mem, 4096)), calc_eq((o) => o.cores, 4)),
     },
+    {
+        'descr': 'and or operators precedence for and', 'expr': '(id == 1 & id == 2) | id == 3',
+        'result': calc_eq((o) => o.id, 3),
+    },
+    {
+        'descr': 'and or operators precedence for and', 'expr': 'id == 1 | (id == 2 & id == 3)',
+        'result': calc_eq((o) => o.id, 1),
+    },
+    {
+        'descr': 'and or operators precedence for and', 'expr': 'id == 1 & id == 2 | id == 3',
+        'result': calc_eq((o) => o.id, 3),
+    },
+    {
+        'descr': 'and or operators precedence for and', 'expr': 'id == 1 | id == 2 & id == 3',
+        'result': calc_eq((o) => o.id, 1),
+    },
 ];
 
 
