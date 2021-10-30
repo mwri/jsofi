@@ -46,6 +46,9 @@ describe('integration', function () {
         });
 
         afterEach(async function () {
+            if (this._db === undefined)
+                return;
+
             try {
                 await this._db.db.destroy('jsofi-tests');
             } catch (err) {

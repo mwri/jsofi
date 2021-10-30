@@ -60,6 +60,9 @@ describe('integration', function () {
         });
 
         afterEach(async function () {
+            if (this._table === undefined)
+                return;
+
             return new Promise((res, rej) => {
                 this._table.drop((err) => {
                     assert.equal(err, null);
